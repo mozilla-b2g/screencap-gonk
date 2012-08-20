@@ -130,14 +130,7 @@ int main(int argc, char** argv)
     uint32_t w, h, f;
     size_t size = 0;
 
-    ScreenshotClient screenshot;
-    if (false) {
-        base = screenshot.getPixels();
-        w = screenshot.getWidth();
-        h = screenshot.getHeight();
-        f = screenshot.getFormat();
-        size = screenshot.getSize();
-    } else {
+    {
         const char* fbpath = "/dev/graphics/fb0";
         int fb = open(fbpath, O_RDONLY);
         if (fb >= 0) {
