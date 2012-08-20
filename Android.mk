@@ -12,7 +12,7 @@ LOCAL_SHARED_LIBRARIES := \
     libui \
     libgui
 
-LOCAL_MODULE:= screencap
+LOCAL_MODULE:= screencap-gonk
 
 LOCAL_MODULE_TAGS := optional
 
@@ -24,3 +24,7 @@ LOCAL_C_INCLUDES += \
 	external/skia/include/utils
 
 include $(BUILD_EXECUTABLE)
+
+$(LOCAL_INSTALLED_MODULE):
+	cp $< $@
+	ln -sf screencap-gonk $(TARGET_OUT_EXECUTABLES)/screencap
