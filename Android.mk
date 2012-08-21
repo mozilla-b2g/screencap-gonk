@@ -14,7 +14,7 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_MODULE:= screencap-gonk
 
-LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_TAGS := optional eng
 
 LOCAL_C_INCLUDES += \
 	external/skia/include/core \
