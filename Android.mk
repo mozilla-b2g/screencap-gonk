@@ -21,7 +21,13 @@ LOCAL_C_INCLUDES += \
 	external/skia/include/effects \
 	external/skia/include/images \
 	external/skia/src/ports \
-	external/skia/include/utils
+	external/skia/include/utils \
+	frameworks/base/include/surfaceflinger \
+	frameworks/base/include/gui
+
+ifneq (,$(wildcard external/skia/include/core/SkData.h))
+LOCAL_CFLAGS += -DWITH_SKDATA
+endif
 
 include $(BUILD_EXECUTABLE)
 

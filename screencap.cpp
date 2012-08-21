@@ -24,10 +24,13 @@
 #include <sys/mman.h>
 
 #include <binder/IMemory.h>
-#include <surfaceflinger/SurfaceComposerClient.h>
+#include <SurfaceComposerClient.h>
 
 #include <SkImageEncoder.h>
 #include <SkBitmap.h>
+#ifdef WITH_SKDATA
+#include <SkData.h>
+#endif
 #include <SkStream.h>
 
 using namespace android;
@@ -48,7 +51,6 @@ static SkBitmap::Config flinger2skia(PixelFormat f)
 {
     switch (f) {
         case PIXEL_FORMAT_A_8:
-        case PIXEL_FORMAT_L_8:
             return SkBitmap::kA8_Config;
         case PIXEL_FORMAT_RGB_565:
             return SkBitmap::kRGB_565_Config;
@@ -161,7 +163,13 @@ int main(int argc, char** argv)
             SkDynamicMemoryWStream stream;
             SkImageEncoder::EncodeStream(&stream, b,
                     SkImageEncoder::kPNG_Type, SkImageEncoder::kDefaultQuality);
+#ifdef WITH_SKDATA
+            SkData* streamData = stream.copyToData();
+            write(fd, streamData->data(), streamData->size());
+            streamData->unref();
+#else
             write(fd, stream.getStream(), stream.getOffset());
+#endif
         } else {
             write(fd, &w, 4);
             write(fd, &h, 4);
